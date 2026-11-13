@@ -41,6 +41,6 @@ module.exports = async function summary (_req) {
     kernelConnected: true,
     workerCount: workers.length,
     deviceCount,
-    workers: workers.map((w) => ({ workerId: w.workerId, devices: (w.deviceIds || []).length }))
+    workers: workers.map((w) => ({ workerId: w.workerId, devices: (w.deviceIds || []).length, deviceIds: w.deviceIds || [] }))
   }
 }

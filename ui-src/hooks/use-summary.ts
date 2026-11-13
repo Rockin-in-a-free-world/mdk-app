@@ -8,7 +8,7 @@ export type SummaryView =
   | { status: 'loading' }
   | { status: 'error'; message: string }
   | { status: 'no-kernel' }
-  | { status: 'ready'; stats: Array<{ label: string; value: number }> }
+  | { status: 'ready'; stats: Array<{ label: string; value: number }>; deviceIds: string[] }
 
 /** The app's summary, ready to render. */
 export const useSummary = (): SummaryView => {
@@ -30,6 +30,7 @@ export const useSummary = (): SummaryView => {
   if (!view.data.kernelConnected) return { status: 'no-kernel' }
   return {
     status: 'ready',
+    deviceIds: view.data.workers.flatMap((w) => w.deviceIds),
     stats: [
       { label: 'Workers', value: view.data.workerCount },
       { label: 'Devices', value: view.data.deviceCount },

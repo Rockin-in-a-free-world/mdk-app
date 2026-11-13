@@ -11,7 +11,7 @@
     "node": ">=24"
   },
   "dependencies": {
-    "@tetherto/mdk-client": "file:../mdk-tech-stack/backend/core/client"
+    "@tetherto/mdk-client": "^0.13.1"
   },
   "files": [
     "mdk-app.yaml",

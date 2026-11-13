@@ -21,5 +21,11 @@ export type Summary = {
   kernelConnected: boolean
   workerCount: number
   deviceCount: number
-  workers: Array<{ workerId: string; devices: number }>
+  workers: Array<{ workerId: string; devices: number; deviceIds: string[] }>
+}
+
+/** What `GET /api/<name>/devices/{deviceId}/telemetry` returns (`controllers/telemetry.js`). */
+export type Telemetry = {
+  deviceId: string
+  metrics: { metrics: Record<string, number | string>; timestamp: number }
 }

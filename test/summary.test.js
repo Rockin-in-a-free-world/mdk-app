@@ -18,7 +18,7 @@ test('summary counts the workers and their devices', async () => {
     kernelConnected: true,
     workerCount: 2,
     deviceCount: 2,
-    workers: [{ workerId: 'w1', devices: 2 }, { workerId: 'w2', devices: 0 }]
+    workers: [{ workerId: 'w1', devices: 2, deviceIds: ['a', 'b'] }, { workerId: 'w2', devices: 0, deviceIds: [] }]
   })
 })
 
