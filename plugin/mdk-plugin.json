@@ -1,0 +1,84 @@
+{
+  "name": "@rockin-in-a-free-world/fleet",
+  "version": "0.1.0",
+  "description": "MDK app — HTTP endpoints that aggregate worker telemetry.",
+  "routes": [
+    {
+      "id": "fleet.summary",
+      "description": "The workers the Kernel knows, with how many devices each one runs.",
+      "handler": "./controllers/summary.js",
+      "safety": "read-only",
+      "http": {
+        "method": "GET",
+        "path": "/api/fleet/summary"
+      }
+    },
+    {
+      "id": "fleet.set-power-mode",
+      "description": "Sets the power mode of one device, as the signed-in user.",
+      "handler": "./controllers/set-power-mode.js",
+      "safety": "write",
+      "errors": [
+        "ERR_INVALID_POWER_MODE",
+        "ERR_DEVICE_NOT_FOUND"
+      ],
+      "http": {
+        "method": "POST",
+        "path": "/api/fleet/devices/{deviceId}/power-mode",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "deviceId",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "mode"
+                ],
+                "properties": {
+                  "mode": {
+                    "type": "string",
+                    "enum": [
+                      "eco",
+                      "normal",
+                      "high"
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "fleet.telemetry",
+      "description": "The live metrics the Worker reports for one device: hashrate, power, temperature and power mode.",
+      "handler": "./controllers/telemetry.js",
+      "safety": "read-only",
+      "http": {
+        "method": "GET",
+        "path": "/api/fleet/devices/{deviceId}/telemetry",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "deviceId",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
+      }
+    }
+  ]
+}
